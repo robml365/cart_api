@@ -4,7 +4,6 @@ import com.example.rml.cartapi.model.Cart;
 import com.example.rml.cartapi.model.Product;
 import com.example.rml.cartapi.util.Constants;
 import jakarta.el.PropertyNotFoundException;
-import org.apache.coyote.BadRequestException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +55,7 @@ public class CartService{
 
         cart.updateCartTimestamp();
 
-       cartsMap.put(cartId, cart);
+        cartsMap.put(cartId, cart);
 
        return cartsMap.get(cartId);
     }

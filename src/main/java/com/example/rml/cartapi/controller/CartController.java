@@ -7,8 +7,10 @@ import jakarta.el.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -39,16 +41,21 @@ public class CartController {
         if(cartService.deleteCartById(id) != null) {
             return ResponseEntity.ok("Cart deleted succesfully");
         }else{
-            throw new PropertyNotFoundException();
+            throw new NoSuchElementException();
         }
     }
 
-    @ExceptionHandler(PropertyNotFoundException.class)
+    @ExceptionHandler(NoSuchElementException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleCartNotFoundException(){
         return "Cart not found.";
     }
 
+    @ExceptionHandler(PropertyNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleMessageNotWritableException(){
+        return "Some data is missing on a product";
+    }
 
 
 }
